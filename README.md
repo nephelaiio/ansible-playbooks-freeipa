@@ -14,15 +14,22 @@ The following lists the group targets and descriptions for every playbook
 | replica.yml | install/configure freeipa server           | ipa_replica |
 | nginx.yml   | install ngnix reverse proxy for freeipa ui | ipa_proxy   |
 | client.yml  | install ngnix reverse proxy for freeipa ui | ipa_client  |
+| users.yml   | manage ipa users and groups                | ipa_user    |
 
 ## Playbook variables
 
 See [Ansible FreeIPA](https://github.com/freeipa/ansible-freeipa#ansible-inventory-file) documentation for a list of additional supported variables
 
-### [server.yml](local.yml):
+### [server.yml](server.yml):
 | required | variable       | description                                 | default   |
 | ---      | ---            | ---                                         | ---       |
 | no       | pdns_recursors | pdns recursors to register delegations with | undefined |
+
+### [users.yml](users.yml):
+| required | variable   | description          | default   |
+| ---      | ---        | ---                  | ---       |
+| no       | ipa_groups | ipa groups to manage | undefined |
+| no       | ipa_users  | ipa users to manage  | undefined |
 
 ### [nginx.yml](nginx.yml):
 | required | variable                              | description                                  | default                                |
@@ -32,7 +39,31 @@ See [Ansible FreeIPA](https://github.com/freeipa/ansible-freeipa#ansible-invento
 | *yes*    | acme_certificate_aws_accesskey_id     | an ec2 key id with route53 management rights | lookup('env', 'AWS_ACCESS_KEY_ID')     |
 | *yes*    | acme_certificate_aws_accesskey_secret | an ec2 key secret                            | lookup('env', 'AWS_SECRET_ACCESS_KEY') |
 
-[replica.yml](replica.yml) and [client.yml](client.yml) playbooks have to user defined parameters
+[replica.yml](replica.yml)  and [client.yml](client.yml) playbooks have to user defined parameters
+
+## Data Formats
+
+### Groups
+```{yaml}
+ipa_groups:
+  - name: test_group
+    state: present
+```
+
+### Users
+```{yaml}
+ipa_users:
+  - user_name: test_user
+    groups:
+      - test_group
+    pass: supersecret
+    first_name: Test
+    last_name: User
+    telephonenumber: 55566778899
+    mail: user@test.com
+    update_password: on_create
+    state: present
+```
 
 ## Dependencies
 
