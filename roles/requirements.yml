@@ -1,0 +1,10 @@
+---
+- src: bertvv.hosts
+  version: v1.2.0
+- src: https://github.com/nginxinc/ansible-role-nginx.git
+  version: a92d424bdb5dc51b143c702754bed761e919a576
+  name: nginxinc.nginx
+- src: nephelaiio.plugins
+  version: 1.0.9
+- src: nephelaiio.acme_certificate_route53
+  version: 1.0.0
