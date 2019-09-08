@@ -75,6 +75,9 @@
                 header_x_forwarded_for:
                   name: X-Forwarded-For
                   value: $proxy_add_x_forwarded_for
+                header_referer:
+                  name: Referer
+                  value: "https://{{ acme_certificate_domain }}"
         upstreams:
           ipa:
             name: ipa
