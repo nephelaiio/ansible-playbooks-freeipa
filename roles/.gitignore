@@ -1,3 +1,6 @@
 *
 !.gitignore
 !requirements.yml
+!ipaserver
+!ipareplica
+!ipaclient
