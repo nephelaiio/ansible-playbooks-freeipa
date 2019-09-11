@@ -7,7 +7,10 @@
 
   roles:
 
-    - ipaclient
+    - role: ipaclient
+      when:
+        - not 'ipa_server' in group_names
+        - not 'ipa_replica' in group_names
 
   vars:
 
