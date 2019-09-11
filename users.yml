@@ -48,6 +48,7 @@
         label: "{{ item.user_name | default('None') }}"
       loop: "{{ ipa_users }}"
       delegate_to: "{{ groups['ipa_server'] | first }}"
+      no_log: yes
       when:
         - ipa_users is defined
 
