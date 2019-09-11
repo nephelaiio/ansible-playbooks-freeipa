@@ -8,3 +8,7 @@
   roles:
 
     - ipaclient
+
+  vars:
+
+    state: "{{ 'absent' if (ipaclient_uninstall | default('no') | bool) else 'present' }}"
