@@ -32,6 +32,7 @@
       ipa_user:
         ipa_user: "{{ ipaadmin_principal }}"
         ipa_pass: "{{ ipaadmin_password }}"
+        ipa_host: "{{ ipaclient_host | default('omit') }}"
         name: "{{ item.user_name }}"
         group: "{{ item.groups | default(omit) }}"
         password: "{{ item.pass }}"
@@ -54,6 +55,7 @@
       ipa_group:
         ipa_user: "{{ ipaadmin_principal }}"
         ipa_pass: "{{ ipaadmin_password }}"
+        ipa_host: "{{ ipaclient_host | default('omit') }}"
         name: "{{ item.name }}"
         groups: "{{ item.groups | default(omit) }}"
         user: "{{ item.users | default(omit) }}"
