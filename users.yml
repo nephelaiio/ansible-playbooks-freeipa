@@ -7,8 +7,6 @@
 
   become: yes
 
-  serial: 1
-
   roles:
 
     - nephelaiio.plugins
@@ -19,6 +17,7 @@
       ipa_group:
         ipa_user: "{{ ipaadmin_principal }}"
         ipa_pass: "{{ ipaadmin_password }}"
+        ipa_host: "{{ ipauser_host | default('omit') }}"
         name: "{{ item.name }}"
         state: "{{ item.state | default('present') }}"
       loop_control:
@@ -48,7 +47,7 @@
         label: "{{ item.user_name | default('None') }}"
       loop: "{{ ipa_users }}"
       delegate_to: "{{ groups['ipa_server'] | first }}"
-      no_log: yes
+      no_log: "{{ not (ipauser_debug | default('no') | bool) }}"
       when:
         - ipa_users is defined
 
