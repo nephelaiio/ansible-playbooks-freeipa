@@ -103,6 +103,12 @@
         record_value: "{{ ansible_default_ipv4.address }}"
         validate_certs: no
 
+    - name: manage freeipa backup cronjob
+      cron:
+        name: freeipa-conf-backup
+        job: ipa-backup
+        special_time: daily
+
   handlers:
 
     - name: restart ipa services
