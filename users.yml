@@ -22,10 +22,8 @@
         state: "{{ item.state | default('present') }}"
       loop_control:
         label: "{{ item.name | default('None') }}"
-      loop: "{{ ipa_groups }}"
+      loop: "{{ ipa_groups | default([]) }}"
       delegate_to: "{{ groups['ipa_server'] | first }}"
-      when:
-        - ipa_groups is defined
 
     - name: create ipa users
       ipa_user:
@@ -45,11 +43,9 @@
         state: "{{ item.state | default('present') }}"
       loop_control:
         label: "{{ item.user_name | default('None') }}"
-      loop: "{{ ipa_users }}"
+      loop: "{{ ipa_users | default([]) }}"
       delegate_to: "{{ groups['ipa_server'] | first }}"
       no_log: "{{ not (ipauser_debug | default('no') | bool) }}"
-      when:
-        - ipa_users is defined
 
     - name: manage ipa group memberships
       ipa_group:
@@ -61,8 +57,6 @@
         user: "{{ item.users | default(omit) }}"
       loop_control:
         label: "{{ item.name | default('None') }}"
-      loop: "{{ ipa_groups }}"
-      when: "{{ item.state | default('present') == 'present' }}"
+      loop: "{{ ipa_groups | default([]) }}"
       delegate_to: "{{ groups['ipa_server'] | first }}"
-      when:
-        - ipa_groups is defined
+      when: "{{ item.state | default('present') == 'present' }}"
