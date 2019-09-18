@@ -62,6 +62,7 @@
       loop_control:
         label: "{{ item.name | default('None') }}"
       loop: "{{ ipa_groups }}"
+      when: "{{ item.state | default('present') == 'present' }}"
       delegate_to: "{{ groups['ipa_server'] | first }}"
       when:
         - ipa_groups is defined
