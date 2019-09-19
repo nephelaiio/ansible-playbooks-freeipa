@@ -5,6 +5,14 @@
 
   become: true
 
+  vars:
+
+    ipareplica_setup_ca: yes
+    ipareplica_setup_dns: yes
+    ipareplica_auto_forwarders: yes
+    ipareplica_setup_firewalld: no
+    ipareplica_allow_zone_overlap: yes
+
   roles:
 
     - bertvv.hosts

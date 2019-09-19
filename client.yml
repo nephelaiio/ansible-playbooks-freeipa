@@ -5,6 +5,10 @@
 
   become: true
 
+  vars:
+
+    ipaclient_force_join: yes
+
   roles:
 
     - role: ipaclient
