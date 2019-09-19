@@ -17,7 +17,7 @@
       ipa_group:
         ipa_user: "{{ ipaadmin_principal }}"
         ipa_pass: "{{ ipaadmin_password }}"
-        ipa_host: "{{ ipauser_host | default('omit') }}"
+        ipa_host: "{{ ipa_users_host | default('omit') }}"
         name: "{{ item.name }}"
         state: "{{ item.state | default('present') }}"
       loop_control:
@@ -29,7 +29,7 @@
       ipa_user:
         ipa_user: "{{ ipaadmin_principal }}"
         ipa_pass: "{{ ipaadmin_password }}"
-        ipa_host: "{{ ipauser_host | default('omit') }}"
+        ipa_host: "{{ ipa_users_host | default('omit') }}"
         name: "{{ item.user_name }}"
         group: "{{ item.groups | default(omit) }}"
         password: "{{ item.pass }}"
@@ -45,13 +45,13 @@
         label: "{{ item.user_name | default('None') }}"
       loop: "{{ ipa_users | default([]) }}"
       delegate_to: "{{ groups['ipa_server'] | first }}"
-      no_log: "{{ not (ipauser_debug | default('no') | bool) }}"
+      no_log: "{{ not (ipa_users_debug | default('no') | bool) }}"
 
     - name: manage ipa group memberships
       ipa_group:
         ipa_user: "{{ ipaadmin_principal }}"
         ipa_pass: "{{ ipaadmin_password }}"
-        ipa_host: "{{ ipauser_host | default('omit') }}"
+        ipa_host: "{{ ipa_users_host | default('omit') }}"
         name: "{{ item.name }}"
         groups: "{{ item.groups | default(omit) }}"
         user: "{{ item.users | default(omit) }}"

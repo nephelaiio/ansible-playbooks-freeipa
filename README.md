@@ -26,10 +26,13 @@ See [Ansible FreeIPA](https://github.com/freeipa/ansible-freeipa#ansible-invento
 | no       | pdns_recursors | pdns recursors to register delegations with | undefined |
 
 ### [users.yml](users.yml):
-| required | variable   | description          | default   |
-| ---      | ---        | ---                  | ---       |
-| no       | ipa_groups | ipa groups to manage | undefined |
-| no       | ipa_users  | ipa users to manage  | undefined |
+| required | variable        | description              | default   |
+| ---      | ---             | ---                      | ---       |
+| no       | ipa_groups      | ipa groups to manage     | undefined |
+| no       | ipa_users       | ipa users to manage      | undefined |
+| no       | ipa_users_host  | ipa server to connect to | undefined |
+| no       | ipa_users_debug | toggle debug logging     | false     |
+|          |                 |                          |           |
 
 ### [nginx.yml](nginx.yml):
 | required | variable                              | description                                  | default                                |
