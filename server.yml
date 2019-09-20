@@ -8,7 +8,7 @@
   vars:
 
     ipaserver_setup_dns: yes
-    ipaserver_auto_forwarders: yes
+    ipaserver_auto_forwarders: "{{ ipaserver_forwarders is not defined }}"
     ipaserver_setup_firewalld: no
     ipaserver_allow_zone_overlap: yes
 
