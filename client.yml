@@ -8,6 +8,7 @@
   vars:
 
     ipaclient_force_join: yes
+    state: "{{ 'absent' if (ipaclient_uninstall | default('no') | bool) else 'present' }}"
 
   roles:
 
@@ -15,7 +16,3 @@
       when:
         - not 'ipa_server' in group_names
         - not 'ipa_replica' in group_names
-
-  vars:
-
-    state: "{{ 'absent' if (ipaclient_uninstall | default('no') | bool) else 'present' }}"
