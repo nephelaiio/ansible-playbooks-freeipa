@@ -9,6 +9,9 @@
 
     ipaclient_force_join: yes
     state: "{{ 'absent' if (ipaclient_uninstall | default('no') | bool) else 'present' }}"
+    _freeipa_pki_certdir: "{{ freeipa_pki_certdir | default('/etc/pki/certs') }}"
+    _freeipa_pki_keydir: "{{ freeipa_pki_keydir | default('/etc/pki/private') }}"
+    _freeipa_pki_autogen: "{{ freeipa_pki_autogen | default('yes') }}"
 
   roles:
 
@@ -16,3 +19,30 @@
       when:
         - not 'ipa_server' in group_names
         - not 'ipa_replica' in group_names
+
+  tasks:
+
+    - block:
+
+        - name: manage pki directories
+          file:
+            state: directory
+            path: "{{ item }}"
+          loop:
+            - "{{ _freeipa_pki_certdir }}"
+            - "{{ _freeipa_pki_keydir }}"
+
+        - name: generate host certificate
+          command: >
+            ipa-getcert request -r
+              -f {{ _freeipa_pki_certdir }}/{{ ansible_fqdn }}.crt
+              -k {{ _freeipa_pki_keydir }}/{{ ansible_fqdn }}.key
+          args:
+            creates: "{{ _freeipa_pki_certdir }}/{{ ansible_fqdn }}.crt"
+
+      when:
+        - _freeipa_pki_autogen | bool
+        - not 'ipa_server' in group_names
+        - not 'ipa_replica' in group_names
+
+

@@ -8,13 +8,12 @@ A set of ansible playbooks to install and configure [FreeIPA](https://www.freeip
 
 The following lists the group targets and descriptions for every playbook
 
-| playbook    | description                                | target      |
-| ---         | ---                                        | ---         |
-| server.yml  | install/configure freeipa server           | ipa_server  |
-| replica.yml | install/configure freeipa server           | ipa_replica |
-| nginx.yml   | install ngnix reverse proxy for freeipa ui | ipa_proxy   |
-| client.yml  | install ngnix reverse proxy for freeipa ui | ipa_client  |
-| users.yml   | manage ipa users and groups                | ipa_user    |
+| playbook    | description                       | target      |
+| ---         | ---                               | ---         |
+| server.yml  | install/configure freeipa server  | ipa_server  |
+| replica.yml | install/configure freeipa replica | ipa_replica |
+| client.yml  | instal/configure freeipa client   | ipa_client  |
+| users.yml   | manage ipa users and groups       | ipa_user    |
 
 ## Playbook variables
 
@@ -32,17 +31,17 @@ See [Ansible FreeIPA](https://github.com/freeipa/ansible-freeipa#ansible-invento
 | no       | ipa_users       | ipa users to manage      | undefined |
 | no       | ipa_users_host  | ipa server to connect to | undefined |
 | no       | ipa_users_debug | toggle debug logging     | false     |
-|          |                 |                          |           |
 
-### [nginx.yml](nginx.yml):
-| required | variable                              | description                                  | default                                |
-| ---      | ---                                   | ---                                          | ---                                    |
-| *yes*    | ipa_url                               | target freeipa proxy url                     | n/a                                    |
-| *yes*    | acme_certificate_email                | letsencrypt email                            | n/a                                    |
-| *yes*    | acme_certificate_aws_accesskey_id     | an ec2 key id with route53 management rights | lookup('env', 'AWS_ACCESS_KEY_ID')     |
-| *yes*    | acme_certificate_aws_accesskey_secret | an ec2 key secret                            | lookup('env', 'AWS_SECRET_ACCESS_KEY') |
+### [client.yml](client.yml):
+| required | variable            | description                                     | default          |
+| ---      | ---                 | ---                                             | ---              |
+| no       | freeipa_pki_autogen | toggle flag for host certificate autogeneration | yes              |
+| no       | freeipa_pki_certdir | cert file location                              | /etc/pki/certs   |
+| no       | freeipa_pki_keydir  | cert key location                               | /etc/pki/private |
 
-[replica.yml](replica.yml)  and [client.yml](client.yml) playbooks have to user defined parameters
+The generated cert and key files will be located at "{{ freeipa_pki_certdir }}/{{ ansible_fqdn }}.crt" and "{{ freeipa_pki_keydir }}/{{ ansible_fqdn }}.key" by default
+
+[client.yml](client.yml) playbook has no user defined parameters
 
 ## Data Formats
 
