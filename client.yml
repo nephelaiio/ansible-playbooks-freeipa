@@ -44,5 +44,3 @@
         - _freeipa_pki_autogen | bool
         - not 'ipa_server' in group_names
         - not 'ipa_replica' in group_names
-
-
