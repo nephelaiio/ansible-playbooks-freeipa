@@ -11,6 +11,9 @@
     ipaserver_auto_forwarders: "{{ ipaserver_forwarders is not defined }}"
     ipaserver_setup_firewalld: no
     ipaserver_allow_zone_overlap: yes
+    ipaserver_no_dnssec_validation: yes
+    ipaserver_setup_adtrust: yes
+    ipaclient_force_join: yes
 
   roles:
 
