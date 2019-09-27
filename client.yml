@@ -40,16 +40,25 @@
           args:
             creates: "{{ _freeipa_pki_certdir }}/{{ ansible_fqdn }}.crt"
 
-        - name: link host certificates
+        - name: link host certificates files
           file:
             state: link
-            src: "{{ item.src }}"
-            dest: "{{ item.dest }}"
-          loop:
-            - src: "{{ _freeipa_pki_certdir }}/{{ ansible_fqdn }}.crt"
-              dest: "/etc/ipa/{{ ansible_fqdn }}.crt"
-            - src: "{{ _freeipa_pki_keydir }}/{{ ansible_fqdn }}.key"
-              dest: "/etc/ipa/{{ ansible_fqdn }}.key"
+            src: "{{ _freeipa_pki_certdir }}/{{ ansible_fqdn }}.crt"
+            dest: "/etc/ipa/{{ ansible_fqdn }}.crt"
+          retister: cert_link
+          retries: 2
+          delay: 5
+          until: cert_link is not failed
+
+        - name: link host certificates keys
+          file:
+            state: link
+            src: "{{ _freeipa_pki_keydir }}/{{ ansible_fqdn }}.key"
+            dest: "/etc/ipa/{{ ansible_fqdn }}.key"
+          retister: cert_link
+          retries: 2
+          delay: 5
+          until: cert_link is not failed
 
       when:
         - not (ipaclient_uninstall | default('no') | bool)
