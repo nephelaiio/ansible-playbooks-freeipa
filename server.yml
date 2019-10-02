@@ -14,6 +14,7 @@
     ipaserver_no_dnssec_validation: yes
     ipaserver_setup_adtrust: yes
     ipaclient_force_join: yes
+    ipaclient_mkhomedir: yes
 
   roles:
 

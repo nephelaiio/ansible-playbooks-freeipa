@@ -15,6 +15,7 @@
     ipareplica_no_dnssec_validation: yes
     ipareplica_setup_adtrust: yes
     ipaclient_force_join: yes
+    ipaclient_mkhomedir: yes
 
   roles:
 
