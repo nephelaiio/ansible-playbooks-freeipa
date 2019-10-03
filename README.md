@@ -33,11 +33,14 @@ See [Ansible FreeIPA](https://github.com/freeipa/ansible-freeipa#ansible-invento
 | no       | ipa_users_debug | toggle debug logging     | false     |
 
 ### [client.yml](client.yml):
-| required | variable            | description                                     | default          |
-| ---      | ---                 | ---                                             | ---              |
-| no       | freeipa_pki_autogen | toggle flag for host certificate autogeneration | yes              |
-| no       | freeipa_pki_certdir | cert file location                              | /etc/pki/certs   |
-| no       | freeipa_pki_keydir  | cert key location                               | /etc/pki/private |
+| required | variable                            | description                                     | default          |
+| ---      | ---                                 | ---                                             | ---              |
+| no       | freeipa_pki_autogen                 | toggle flag for host certificate autogeneration | yes              |
+| no       | freeipa_pki_certdir                 | cert file location                              | /etc/pki/certs   |
+| no       | freeipa_pki_keydir                  | cert key location                               | /etc/pki/private |
+| no       | ipaclient_krb_overrides             | krb5.conf overrides for [libdefaults] section   | []               |
+| no       | ipaclient_ssh_login_manage          | toggle ssh login management                     | no               |
+| no       | ipaclient_ssh_login_password_enable | enable ssh login passwords                      | no               |
 
 The generated cert and key files will be located at "{{ freeipa_pki_certdir }}/{{ ansible_fqdn }}.crt" and "{{ freeipa_pki_keydir }}/{{ ansible_fqdn }}.key" by default
 

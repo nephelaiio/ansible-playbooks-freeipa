@@ -7,8 +7,10 @@
 
   vars:
 
-    ipaclient_force_join: yes
+    ipaclient_realm: "{{ ipaclient_domain | upper }}"
     ipaclient_mkhomedir: yes
+    ipaclient_force_join: yes
+    ipaclient_servers: "{{ groups['ipa_server'] }}"
     state: "{{ 'absent' if (ipaclient_uninstall | default('no') | bool) else 'present' }}"
     _freeipa_pki_certdir: "{{ freeipa_pki_certdir | default('/etc/pki/certs') }}"
     _freeipa_pki_keydir: "{{ freeipa_pki_keydir | default('/etc/pki/private') }}"
@@ -61,8 +63,36 @@
           delay: 5
           until: cert_link is not failed
 
+        - name: override krb defaults
+          lineinfile:
+            path: /etc/krb5.conf
+            regexp: "^( *{{ item.setting }} *= *).*"
+            line: '\1{{ item.value }}'
+            backrefs: yes
+            insertafter: "[libdefaults]"
+          loop_control:
+            label: "{{ item.setting }}"
+          loop: "{{ ipaclient_krb_overrides | default([]) }}"
+
+        - name: enable ssh password authentication
+          lineinfile:
+            path: /etc/ssh/sshd_config
+            regexp: "^PasswordAuthentication .*"
+            line: "PasswordAuthentication {{ ssh_password_auth }}"
+          vars:
+            ssh_password_auth: "{{ 'yes' if (ipaclient_ssh_login_password_enable | default('no') | bool) else 'no' }}"
+          when: ipaclient_ssh_password_login_manage | bool('no') | bool
+          notify: restart ssh
+
       when:
         - not (ipaclient_uninstall | default('no') | bool)
         - _freeipa_pki_autogen | bool
         - not 'ipa_server' in group_names
         - not 'ipa_replica' in group_names
+
+  handlers:
+
+    - name: restart ssh
+      service:
+        name: sshd
+        state: restarted
