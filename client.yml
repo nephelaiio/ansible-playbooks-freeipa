@@ -81,7 +81,7 @@
             line: "PasswordAuthentication {{ ssh_password_auth }}"
           vars:
             ssh_password_auth: "{{ 'yes' if (ipaclient_ssh_login_password_enable | default('no') | bool) else 'no' }}"
-          when: ipaclient_ssh_password_login_manage | bool('no') | bool
+          when: ipaclient_ssh_password_login_manage | default('no') | bool
           notify: restart ssh
 
       when:
