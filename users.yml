@@ -59,4 +59,4 @@
         label: "{{ item.name | default('None') }}"
       loop: "{{ ipa_groups | default([]) }}"
       delegate_to: "{{ groups['ipa_server'] | first }}"
-      when: "{{ item.state | default('present') == 'present' }}"
+      when: item.state | default('present') == 'present'
