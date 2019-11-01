@@ -103,17 +103,6 @@
 
       when: pdns_recursors is defined
 
-    - name: create host record in freeipa dns
-      ipa_dnsrecord:
-        ipa_host: "{{ ansible_fqdn }}"
-        ipa_user: "{{ ipaadmin_principal }}"
-        ipa_pass: "{{ ipaadmin_password }}"
-        zone_name: "{{ ipaserver_domain }}"
-        record_name: '@'
-        record_type: A
-        record_value: "{{ ansible_default_ipv4.address }}"
-        validate_certs: no
-
     - name: manage freeipa backup cronjob
       cron:
         name: freeipa-conf-backup
