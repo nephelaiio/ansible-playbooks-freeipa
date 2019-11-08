@@ -83,6 +83,11 @@
           when: ipaclient_ssh_password_login_manage | default('no') | bool
           notify: restart ssh
 
+        - name: restart sssd
+          service:
+            name: sssd
+            state: restarted
+
       when:
         - not (ipaclient_uninstall | default('no') | bool)
         - _freeipa_pki_autogen | bool
