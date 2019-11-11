@@ -39,9 +39,10 @@
             ipa-getcert request -r
               -f {{ _freeipa_pki_certdir }}/{{ ansible_fqdn }}.crt
               -k {{ _freeipa_pki_keydir }}/{{ ansible_fqdn }}.key
-              -A {{ ansible_default_ipv4.address }}
           args:
             creates: "{{ _freeipa_pki_certdir }}/{{ ansible_fqdn }}.crt"
+          tags:
+            - getcert
 
         - name: link host certificate files
           file:
@@ -94,6 +95,8 @@
         - _freeipa_pki_autogen | bool
         - not 'ipa_server' in group_names
         - not 'ipa_replica' in group_names
+      tags:
+        - pki
 
   handlers:
 
