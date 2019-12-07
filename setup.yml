@@ -8,5 +8,8 @@
     - name: install requirements
       command: pip install -r requirements.txt
 
-    - name: run ansible galaxy
+    - name: install ansible galaxy roles
       command: ansible-galaxy install -r roles/requirements.yml -p galaxy/ --force
+
+    - name: run ansible galaxy collections
+      command: ansible-galaxy install -r collections/requirements.yml
