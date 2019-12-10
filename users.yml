@@ -54,8 +54,8 @@
         ipa_pass: "{{ ipaadmin_password }}"
         ipa_host: "{{ ipa_users_host | default('omit') }}"
         name: "{{ item.name }}"
-        groups: "{{ item.groups | default(omit) }}"
-        user: "{{ item.users | default(omit) }}"
+        group: "{{ item.group | default(omit) }}"
+        user: "{{ item.user | default(omit) }}"
       loop_control:
         label: "{{ item.name | default('None') }}"
       loop: "{{ ipa_groups }}"
