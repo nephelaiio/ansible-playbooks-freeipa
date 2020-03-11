@@ -1,7 +1,7 @@
 ---
 - name: Configure ipa clients
 
-  hosts: ipa_client
+  hosts: "{{ dynamic_inventory | default('ipa_client') }}"
 
   become: true
 
