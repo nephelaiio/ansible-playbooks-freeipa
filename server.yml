@@ -21,7 +21,7 @@
     - bertvv.hosts
     - ipaserver
 
-  tasks:
+  pre_tasks:
 
     - block:
 
@@ -86,6 +86,8 @@
           loop: "{{ pdns_recursor_domains }}"
 
       when: pdns_recursors is defined
+
+  tasks:
 
     - name: manage freeipa backup cronjob
       cron:
