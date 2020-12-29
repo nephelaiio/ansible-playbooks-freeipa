@@ -1,7 +1,7 @@
 ---
 - name: Manage freeipa users
 
-  hosts: "{{ dynamic_provisioning | default('ipa_user') }}"
+  hosts: "{{ dynamic_provisioning | default('ipa_user') }}:ipa_skip"
 
   gather_facts: no
 

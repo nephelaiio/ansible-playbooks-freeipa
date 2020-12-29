@@ -1,7 +1,7 @@
 ---
 - name: Configure ipa clients
 
-  hosts: "{{ dynamic_provisioning | default('ipa_client') }}"
+  hosts: "{{ dynamic_provisioning | default('ipa_client') }}:ipa_skip"
 
   become: true
 
