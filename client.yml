@@ -1,7 +1,7 @@
 ---
 - name: Configure ipa clients
 
-  hosts: "{{ dynamic_provisioning | default('ipa_client') }}:ipa_skip"
+  hosts: "{{ dynamic_provisioning | default('ipa_client') }}"
 
   become: true
 
@@ -19,6 +19,7 @@
 
     - role: ipaclient
       when:
+        - "'ipa_client' in group_names"
         - not 'ipa_server' in group_names
         - not 'ipa_replica' in group_names
 
@@ -91,6 +92,7 @@
             state: restarted
 
       when:
+        - "'ipa_client' in group_names"
         - not (ipaclient_uninstall | default('no') | bool)
         - _freeipa_pki_autogen | bool
         - not 'ipa_server' in group_names
