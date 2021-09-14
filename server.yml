@@ -108,7 +108,7 @@
               /bin/kill -HUP `cat /var/run/krb5kdc.pid 2>/dev/null` 2> /dev/null || true
             endscript
           }
-      when: weekly_krb5kdc_rotate | default(`false`) | bool == true
+      when: weekly_krb5kdc_rotate | default(`false`) | bool
 
   handlers:
 
