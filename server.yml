@@ -105,7 +105,7 @@
             weekly
             rotate 12
             postrotate
-              /etc/init.d/krb5kdc condrestart >/dev/null 2>&1 || true
+              systemctl reload krb5kdc.service >/dev/null 2>&1 || true
             endscript
           }
       when: weekly_krb5kdc_rotate | default(`false`) | bool
