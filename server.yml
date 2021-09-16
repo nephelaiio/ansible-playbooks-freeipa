@@ -95,6 +95,21 @@
         job: ipa-backup
         special_time: daily
 
+    - name: manage kerberos log with logrotate
+      copy:
+        dest: /etc/logrotate.d/krb5kdc
+        content: |
+          /var/log/krb5kdc.log{
+            missingok
+            notifempty
+            weekly
+            rotate 12
+            postrotate
+              /usr/bin/systemctl reload krb5kdc.service >/dev/null 2>&1 || true
+            endscript
+          }
+      when: weekly_krb5kdc_rotate | default(`false`) | bool
+
   handlers:
 
     - name: restart ipa services
